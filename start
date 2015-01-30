@@ -41,8 +41,14 @@ EOF
 main() {
 	set -eo pipefail
 	case "$1" in
-	cmd:run)            shift; cmd-run $@;;
-	*)                  exec /bin/consul agent -config-dir=/config $@;;
+		cmd:run)
+			shift
+			cmd-run $@
+		;;
+		*)
+			local nproc=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1)
+			GOMAXPROCS=$nproc exec /bin/consul agent -config-dir=/config $@
+		;;
 	esac
 }
 
