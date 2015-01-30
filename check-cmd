@@ -7,7 +7,13 @@ main() {
 
 	local image="$(docker inspect -f "{{.Config.Image}}" $container_id)"
 	local ip="$(docker inspect -f "{{.NetworkSettings.IPAddress}}" $container_id)"
-	docker run --rm --net container:$container_id -e "SERVICE_ADDR=$ip:$port" $image "$cmd"
+	local check_id="chk-$(cat /proc/sys/kernel/random/uuid)"
+	
+	docker run --name $check_id --net container:$container_id -e "SERVICE_ADDR=$ip:$port" $image "$cmd"
+	local code=$?
+	docker rm -f $check_id >/dev/null 2>&1 || true
+
+	exit $code
 }
 
 main $@

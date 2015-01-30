@@ -17,7 +17,14 @@ main() {
 		--retry 2 \
 		$opts \
 		http://$ip:$port$path"
-	docker run --rm --net container:$container_id --entrypoint "/bin/bash" $IMAGE -c "$curl_cmd"
+
+	local check_id="chk-$(cat /proc/sys/kernel/random/uuid)"
+
+	docker run --name $check_id --net container:$container_id --entrypoint "/bin/bash" $IMAGE -c "$curl_cmd"
+	local code=$?
+	docker rm -f $check_id >/dev/null 2>&1 || true
+
+	exit $code
 }
 
 main $@
