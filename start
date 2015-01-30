@@ -31,7 +31,8 @@ eval docker run --name consul -h \$HOSTNAME \
 	-p $external_ip:8302:8302/udp \
 	-p $external_ip:8400:8400 \
 	-p $external_ip:8500:8500 \
-	-p $bridge_ip:53:53/udp \
+	-p $bridge_ip:53:8600 \
+	-p $bridge_ip:53:8600/udp \
 	$args \
 	$IMAGE $server_flag -advertise $external_ip $run_mode
 EOF
