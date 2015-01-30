@@ -7,7 +7,7 @@ RUN cd /bin && unzip /tmp/consul.zip && chmod +x /bin/consul && rm /tmp/consul.z
 ADD https://dl.bintray.com/mitchellh/consul/0.4.1_web_ui.zip /tmp/webui.zip
 RUN cd /tmp && unzip /tmp/webui.zip && mv dist /ui && rm /tmp/webui.zip
 
-ADD https://get.docker.io/builds/Linux/x86_64/docker-1.2.0 /bin/docker
+ADD https://get.docker.io/builds/Linux/x86_64/docker-1.4.1 /bin/docker
 RUN chmod +x /bin/docker
 
 RUN opkg-install curl bash
