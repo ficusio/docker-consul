@@ -22,7 +22,8 @@ ADD ./check-cmd /bin/check-cmd
 EXPOSE 8300 8301 8301/udp 8302 8302/udp 8400 8500 8600 8600/udp
 VOLUME ["/data"]
 
-ENV SHELL /bin/bash
+ENV SHELL=/bin/bash \
+    SERVICE_IGNORE=yes
 
 ENTRYPOINT ["/bin/start"]
 CMD []
