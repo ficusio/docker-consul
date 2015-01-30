@@ -10,13 +10,13 @@ main() {
 	
 	local ip="$(docker inspect -f "{{.NetworkSettings.IPAddress}}" $container_id)"
 	local curl_cmd="curl \
+		--include \
 		--silent \
 		--show-error \
 		--fail \
-		--dump-header /dev/stderr \
 		--retry 2 \
 		$opts \
-		http://$ip:$port$path > /dev/null"
+		http://$ip:$port$path"
 	docker run --rm --net container:$container_id --entrypoint "/bin/bash" $IMAGE -c "$curl_cmd"
 }
 
